@@ -1,3 +1,4 @@
+-- ~/.config/nvim/lua/Srijan/lazy.lua
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -11,7 +12,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup( { import = "Srijan.plugins" }, {
+require("lazy").setup({ import = "Srijan.plugins" }, {
   checker = {
     enabled = true,
     notify = false,
@@ -20,3 +21,4 @@ require("lazy").setup( { import = "Srijan.plugins" }, {
     notify = false,
   },
 })
+

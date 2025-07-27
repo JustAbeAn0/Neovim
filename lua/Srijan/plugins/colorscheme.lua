@@ -1,7 +1,7 @@
 return {
     "tiagovla/tokyodark.nvim",
     opts = {
-        transparent_background = false,
+        transparent_background = true,
         gamma = 1.00,
         styles = {
             comments = { italic = true },

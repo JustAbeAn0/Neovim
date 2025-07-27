@@ -8,7 +8,7 @@ return {
   config = function()
     require("mason").setup()
     require("mason-lspconfig").setup({
-      ensure_installed = { "tsserver", "pyright" }, -- Remove lua_ls from here
+      ensure_installed = { "ts_ls", "pyright" }, 
     })
     
     local lspconfig = require("lspconfig")
@@ -40,7 +40,7 @@ return {
 
     -- Configure your LSPs here
     -- Remove the lua_ls setup for now
-    lspconfig.tsserver.setup({
+    lspconfig.ts_ls.setup({
       on_attach = on_attach,
       capabilities = capabilities,
     })

@@ -23,9 +23,9 @@ keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" })
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" })
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" })
 
--- Toggle Terminal
-keymap.set("n", "<leader>t", "<cmd>ToggleTerm<CR>", { desc = "Toggle terminal" })
+-- Toggle Terminal(Load before pulgin)
+keymap.set("n", "<leader>tt", "<cmd>ToggleTerm<CR>", { desc = "Toggle terminal" })
 
 -- Terminal mode key mappings
-keymap.set("t", "<C-t>", [[<C-\><C-n><cmd>ToggleTerm<CR>]], { noremap = true, silent = true })
+--keymap.set("t", "<C-t>", [[<C-\><C-n><cmd>ToggleTerm<CR>]], { noremap = true, silent = true })
 

@@ -28,5 +28,6 @@ return {
   require("Srijan.plugins.gitsigns"),
   require("Srijan.plugins.autopairs"),
   require("Srijan.plugins.indent-blankline"),
+  require("Srijan.plugins.autosave"),
 }
 

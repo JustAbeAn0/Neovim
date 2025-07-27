@@ -13,7 +13,7 @@ return {
         persist_size = true,
         direction = "horizontal",
         close_on_exit = true,
-        shell = 'cmd.exe',
+        shell = '"C:/Program Files/Git/bin/bash.exe"',
         float_opts = {
           border = "curved",
           winblend = 3,
@@ -32,6 +32,7 @@ return {
         vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
         vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
         vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+        vim.keymap.set('t', '<C-t>', [[<C-\><C-n>:bd!<CR>]], opts)
       end
   
       -- if you only want these mappings for toggle term use term://*toggleterm#* instead

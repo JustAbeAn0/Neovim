@@ -4,13 +4,16 @@ return {
   build = ":TSUpdate",
   dependencies = {
     "windwp/nvim-ts-autotag",
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    "RRethy/nvim-treesitter-endwise",
   },
   config = function()
     -- import nvim-treesitter plugin
     local treesitter = require("nvim-treesitter.configs")
 
     -- configure treesitter
-    treesitter.setup({ -- enable syntax highlighting
+    treesitter.setup({
+      -- enable syntax highlighting
       highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
@@ -21,23 +24,7 @@ return {
       autotag = {
         enable = true,
       },
-      -- ensure these language parsers are installed
-      ensure_installed = {
-        "json",
-        "javascript",
-        "typescript",
-        "tsx",
-        "yaml",
-        "html",
-        "css",
-        "bash",
-        "lua",
-        "vim",
-        "dockerfile",
-        "gitignore",
-        "query",
-        "vimdoc",
-      },
+      -- enable incremental selection
       incremental_selection = {
         enable = true,
         keymaps = {

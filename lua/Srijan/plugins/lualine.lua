@@ -50,22 +50,53 @@ return {
     }
 
     -- configure lualine with modified theme
-    lualine.setup({
-      options = {
-        theme = my_lualine_theme,
+lualine.setup({
+  options = {
+    theme = my_lualine_theme,
+    section_separators = '',
+    component_separators = '',
+  },
+  sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {
+      {
+        lazy_status.updates,
+        cond = lazy_status.has_updates,
+        color = { fg = "#ff9e64" },
       },
-      sections = {
-        lualine_x = {
-          {
-            lazy_status.updates,
-            cond = lazy_status.has_updates,
-            color = { fg = "#ff9e64" },
-          },
-          { "encoding" },
-          { "fileformat" },
-          { "filetype" },
-        },
-      },
-    })
+      { "encoding" },
+      { "fileformat" },
+      { "filetype" },
+    },
+    lualine_y = {},
+    lualine_z = {},
+  },
+  tabline = {
+      lualine_a = {
+    {
+      function()
+        for _, buf in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
+          local name = buf.name
+          if name ~= "" and vim.fn.filereadable(name) == 1 then
+            local filename = vim.fn.fnamemodify(name, ":t")
+            local extension = vim.fn.fnamemodify(name, ":e")
+            local icon = require("nvim-web-devicons").get_icon(filename, extension, { default = true })
+            return icon .. " " .. filename
+          end
+        end
+        return "📄 [No File]"
+      end,
+    },
+  },
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {},
+  },
+  extensions = {},
+})
   end,
 }

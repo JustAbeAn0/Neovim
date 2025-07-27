@@ -4,57 +4,75 @@ return {
   config = function()
     require("nvim-treesitter.configs").setup({
       textobjects = {
+        -- TEXT SELECTION OBJECTS
         select = {
           enable = true,
-
-          -- Automatically jump forward to textobj, similar to targets.vim
           lookahead = true,
-
           keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
+            -- Assignment objects
             ["a="] = { query = "@assignment.outer", desc = "Select outer part of an assignment" },
             ["i="] = { query = "@assignment.inner", desc = "Select inner part of an assignment" },
             ["l="] = { query = "@assignment.lhs", desc = "Select left hand side of an assignment" },
             ["r="] = { query = "@assignment.rhs", desc = "Select right hand side of an assignment" },
 
-            -- works for javascript/typescript files (custom capture I created in after/queries/ecma/textobjects.scm)
+            -- Property objects (JS/TS)
             ["a:"] = { query = "@property.outer", desc = "Select outer part of an object property" },
             ["i:"] = { query = "@property.inner", desc = "Select inner part of an object property" },
             ["l:"] = { query = "@property.lhs", desc = "Select left part of an object property" },
             ["r:"] = { query = "@property.rhs", desc = "Select right part of an object property" },
 
+            -- Parameter/argument objects
             ["aa"] = { query = "@parameter.outer", desc = "Select outer part of a parameter/argument" },
             ["ia"] = { query = "@parameter.inner", desc = "Select inner part of a parameter/argument" },
 
+            -- Conditional objects
             ["ai"] = { query = "@conditional.outer", desc = "Select outer part of a conditional" },
             ["ii"] = { query = "@conditional.inner", desc = "Select inner part of a conditional" },
 
+            -- Loop objects
             ["al"] = { query = "@loop.outer", desc = "Select outer part of a loop" },
             ["il"] = { query = "@loop.inner", desc = "Select inner part of a loop" },
 
+            -- Function call objects
             ["af"] = { query = "@call.outer", desc = "Select outer part of a function call" },
             ["if"] = { query = "@call.inner", desc = "Select inner part of a function call" },
 
+            -- Method/function definition objects
             ["am"] = { query = "@function.outer", desc = "Select outer part of a method/function definition" },
             ["im"] = { query = "@function.inner", desc = "Select inner part of a method/function definition" },
 
+            -- Class objects
             ["ac"] = { query = "@class.outer", desc = "Select outer part of a class" },
             ["ic"] = { query = "@class.inner", desc = "Select inner part of a class" },
+            
+            -- Comment objects
+            ["a/"] = { query = "@comment.outer", desc = "Select outer part of a comment" },
+            ["i/"] = { query = "@comment.inner", desc = "Select inner part of a comment" },
+            
+            -- Block objects
+            ["ab"] = { query = "@block.outer", desc = "Select outer part of a block" },
+            ["ib"] = { query = "@block.inner", desc = "Select inner part of a block" },
           },
         },
+        
+        -- SWAPPING OBJECTS
         swap = {
           enable = true,
           swap_next = {
             ["<leader>na"] = "@parameter.inner", -- swap parameters/argument with next
             ["<leader>n:"] = "@property.outer", -- swap object property with next
             ["<leader>nm"] = "@function.outer", -- swap function with next
+            ["<leader>nb"] = "@block.outer",    -- swap block with next
           },
           swap_previous = {
             ["<leader>pa"] = "@parameter.inner", -- swap parameters/argument with prev
             ["<leader>p:"] = "@property.outer", -- swap object property with prev
             ["<leader>pm"] = "@function.outer", -- swap function with previous
+            ["<leader>pb"] = "@block.outer",    -- swap block with previous
           },
         },
+        
+        -- NAVIGATION
         move = {
           enable = true,
           set_jumps = true, -- whether to set jumps in the jumplist
@@ -64,9 +82,9 @@ return {
             ["]c"] = { query = "@class.outer", desc = "Next class start" },
             ["]i"] = { query = "@conditional.outer", desc = "Next conditional start" },
             ["]l"] = { query = "@loop.outer", desc = "Next loop start" },
+            ["]b"] = { query = "@block.outer", desc = "Next block start" },
+            ["]/"] = { query = "@comment.outer", desc = "Next comment start" },
 
-            -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
-            -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
             ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
             ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
           },
@@ -76,6 +94,8 @@ return {
             ["]C"] = { query = "@class.outer", desc = "Next class end" },
             ["]I"] = { query = "@conditional.outer", desc = "Next conditional end" },
             ["]L"] = { query = "@loop.outer", desc = "Next loop end" },
+            ["]B"] = { query = "@block.outer", desc = "Next block end" },
+            ["]/"] = { query = "@comment.outer", desc = "Next comment end" },
           },
           goto_previous_start = {
             ["[f"] = { query = "@call.outer", desc = "Prev function call start" },
@@ -83,6 +103,8 @@ return {
             ["[c"] = { query = "@class.outer", desc = "Prev class start" },
             ["[i"] = { query = "@conditional.outer", desc = "Prev conditional start" },
             ["[l"] = { query = "@loop.outer", desc = "Prev loop start" },
+            ["[b"] = { query = "@block.outer", desc = "Prev block start" },
+            ["[/"] = { query = "@comment.outer", desc = "Prev comment start" },
           },
           goto_previous_end = {
             ["[F"] = { query = "@call.outer", desc = "Prev function call end" },
@@ -90,7 +112,31 @@ return {
             ["[C"] = { query = "@class.outer", desc = "Prev class end" },
             ["[I"] = { query = "@conditional.outer", desc = "Prev conditional end" },
             ["[L"] = { query = "@loop.outer", desc = "Prev loop end" },
+            ["[B"] = { query = "@block.outer", desc = "Prev block end" },
+            ["[/"] = { query = "@comment.outer", desc = "Prev comment end" },
           },
+        },
+        
+        -- LSP INTEGRATION
+        lsp_interop = {
+          enable = true,
+          border = "rounded",
+          floating_preview_opts = {},
+          peek_definition_code = {
+            ["<leader>df"] = "@function.outer",
+            ["<leader>dF"] = "@class.outer",
+          },
+        },
+      },
+      
+      -- INCREMENTAL SELECTION
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "<C-space>",
+          node_incremental = "<C-space>",
+          scope_incremental = "<C-s>",
+          node_decremental = "<bs>",
         },
       },
     })

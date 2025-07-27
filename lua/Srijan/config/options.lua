@@ -37,3 +37,11 @@ opt.splitbelow = true -- split horizontal window to the bottom
 
 -- turn off swapfile
 opt.swapfile = false
+
+--turn off highlights of the search
+opt.hlsearch = false
+
+-- Always show the tabline
+opt.showtabline = 2 
+
+
